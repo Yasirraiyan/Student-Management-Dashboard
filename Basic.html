@@ -1,0 +1,95 @@
+১️⃣ Context API ব্যবহার কোথায় হয়েছে
+Project এ Context List
+
+UserContext → Login/logout state
+
+StudentContext → Student list, add/delete
+
+LanguageContext → Language toggle (en ↔ bn)
+
+ThemeContext → Light/Dark toggle
+
+MyContext → Future app-wide reusable data
+
+Step 1: Context তৈরি (createContext)
+
+Example: UserContext.js
+
+import { createContext, useState } from "react";
+
+export const UserContext = createContext();
+
+export const UserProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  
+  const login = (name, role) => setUser({ name, role });
+  const logout = () => setUser(null);
+
+  return (
+    <UserContext.Provider value={{ user, login, logout }}>
+      {children}
+    </UserContext.Provider>
+  );
+};
+
+
+এখানে আমরা global state (user) এবং methods (login, logout) context এ রাখলাম।
+
+Step 2: Provider দিয়ে App wrap করা
+
+App.js
+
+<UserProvider>
+  <MyProvider>
+    <ThemeContextProvider>
+      <LanguageContextProvider>
+        <StudentProvider>
+          <AppComponents />
+        </StudentProvider>
+      </LanguageContextProvider>
+    </ThemeContextProvider>
+  </MyProvider>
+</UserProvider>
+
+
+এখন AppComponents এর যেকোনো nested component context access করতে পারবে।
+
+Step 3: Context Access করা (useContext)
+
+Login.js
+
+const { user, login } = useContext(UserContext);
+
+const handleSubmit = () => login(name, role);
+
+
+StudentList.js
+
+const { students, addStudent, deleteStudent } = useContext(StudentContext);
+
+
+LanguageToggle.js
+
+const { languageContext, toggleLanguage } = useContext(LanguageContext);
+
+
+ThemeToggle.js
+
+const { themeContext, toggleTheme } = useContext(ThemeContext);
+
+
+Component কে props chain করার দরকার নেই, context থেকে direct access।
+
+২️⃣ Context API vs Basic State/Props
+Feature	Basic (Props + useState)	Context API
+State Sharing	Parent → child props দিয়ে	App-wide/global state
+Prop Drilling	অনেক nested component এ props pass করতে হয়	নেই, direct access via useContext
+Dynamic Update	State change করলে শুধুমাত্র local component update	State change হলে সব component যেটি context ব্যবহার করছে update হয়
+Scalable	Nested component এ সমস্যা	Large project এ easy, maintainable
+Example	<Child data={user} /> → <GrandChild user={user} />	const { user } = useContext(UserContext) in GrandChild
+
+✅ Conclusion:
+
+Basic props/state: ছোট apps বা shallow component tree এর জন্য ভালো।
+
+Context API: বড় apps, multiple nested components, global state, theme/language toggle এর জন্য perfect।

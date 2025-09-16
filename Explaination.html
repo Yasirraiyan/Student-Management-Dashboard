@@ -1,0 +1,33 @@
+React Topics Used in this Project
+Topic	ব্যবহার / ব্যাখ্যা
+Components	- Login.js, StudentList.js, LanguageToggle.js, ThemeToggle.js ইত্যাদি আলাদা component হিসেবে তৈরি।
+- Component reuse ও modular design নিশ্চিত করে।
+JSX	- HTML এর মতো syntax ব্যবহার করে React element তৈরি করা।
+- উদাহরণ: <h1>Student Management Dashboard</h1>
+State (useState)	- Component এর internal state manage করার জন্য।
+- উদাহরণ: Login এ name, role, StudentList এ students, ThemeToggle এ themeContext
+Context API (createContext, useContext)	- Global state management।
+- UserContext, StudentContext, ThemeContext, LanguageContext তৈরি এবং access করা।
+- Prop drilling এড়ানো।
+Props	- Component এর মধ্যে data পাঠানোর জন্য।
+- উদাহরণ: StudentList কে props না দিলেও context দিয়ে data access।
+Event Handling	- Button click, form submit ইত্যাদি handle করা।
+- উদাহরণ: <button onClick={toggleTheme}>Toggle Theme</button>
+Conditional Rendering	- UI show/hide করার জন্য।
+- উদাহরণ: Login form show/hide based on user state।
+Lists & Keys	- Student list render করার জন্য map() ব্যবহার।
+- প্রতিটি item এর জন্য unique key দেওয়া।
+Forms	- Input এবং select element handle করার জন্য।
+- Controlled components ব্যবহার করে state update করা।
+Component Composition	- Context providers wrap করে App.js এ nested structure তৈরি।
+- এক component অন্য component এর child হিসেবে include করা।
+Dynamic UI Update	- State পরিবর্তন হলে React automatically UI update করে।
+- উদাহরণ: Language toggle, Theme toggle, Add/Delete Student।
+
+💡 Extra Note:
+
+এই project এ React Hooks পুরোপুরি ব্যবহার হয়েছে: useState + useContext।
+
+Props usage কমানো হয়েছে context এর কারণে → cleaner and maintainable code।
+
+Future এ, যদি API integration বা routing লাগে → useEffect এবং react-router সহজেই integrate করা যাবে।
